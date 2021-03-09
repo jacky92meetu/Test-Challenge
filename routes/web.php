@@ -13,6 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::any('/', function () {
-    return Redirect::away('/api');
+Route::get('/', function () {
+    return view('welcome');
 });

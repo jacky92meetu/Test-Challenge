@@ -43,12 +43,27 @@ class Handler extends ExceptionHandler
     {
         // This will replace our 404 response with
         // a JSON response.
+        if($exception instanceof \Illuminate\Validation\ValidationException){
+            return response()->json([
+                'error' => 'Invalid data'
+            ], 400);
+        }
+        if($exception instanceof \Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException){
+            return response()->json([
+                'error' => 'Method not allowed'
+            ], 405);
+        }
         if ($exception instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException || $exception instanceof \Illuminate\Database\Eloquent\ModelNotFoundException) {
             return response()->json([
-                'error' => 'Resource not found'
+                'error' => $exception->getMessage()
             ], 404);
         }
-
+        if ($exception instanceof \Illuminate\Auth\Access\AuthorizationException) {
+            return response()->json([
+                'error' => $exception->getMessage()
+            ], 403);
+        }
+        
         return parent::render($request, $exception);
     }
 }
