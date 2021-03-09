@@ -21,7 +21,11 @@ class PostController extends Controller
      */
     public function index()
     {
-        return Post::paginate();
+        if(auth()->user()->user_type=='user'){
+            return Post::where('user_id','=',auth()->user()->id)->paginate();
+        }else{
+            return Post::paginate();
+        }
     }
 
     /**
