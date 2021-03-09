@@ -22,9 +22,24 @@ class UsersTableSeeder extends Seeder
             'name' => 'Admin',
             'email' => 'admin@admin.com',
             'password' => Hash::make('password'),
-            'user_type' => 'admin'
+            'user_type' => 'admin',
+            'api_token' => 'testing_token_admin'
         ]);
-        $user->generateToken('testing1234');
-        
+
+        $user = User::create([
+            'name' => 'User',
+            'email' => 'user@user.com',
+            'password' => Hash::make('password'),
+            'user_type' => 'user',
+            'api_token' => 'testing_token_user'
+        ]);
+
+        $user = User::create([
+            'name' => 'Manager',
+            'email' => 'manager@manager.com',
+            'password' => Hash::make('password'),
+            'user_type' => 'manager',
+            'api_token' => 'testing_token_manager'
+        ]);
     }
 }
