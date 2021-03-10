@@ -1,6 +1,6 @@
 FROM php:7.4-fpm-alpine
 
-RUN apk --update add --no-cache supervisor
+RUN apk --update add --no-cache supervisor bash
 
 RUN docker-php-ext-install mysqli pdo_mysql
 
@@ -11,8 +11,8 @@ RUN rm -rf composer-setup.php
 
 # Build process
 COPY . .
-RUN composer install --no-dev
+RUN composer install  --no-dev
 
 COPY supervisord-app.conf /etc/supervisord.conf
 
-ENTRYPOINT [ "/var/www/html/docker-entrypoint" ]
+ENTRYPOINT ["/usr/bin/supervisord", "-n", "-c", "/etc/supervisord.conf"]

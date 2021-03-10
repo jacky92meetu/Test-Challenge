@@ -6,6 +6,11 @@ Create a new Laravel application as a multiple role blog system, API only, no ne
 docker-compose up -d
 ```
 
+## Run DB migrate in the application for first time use
+```
+php artisan migrate
+```
+
 ## Example of API calls
 This come with sample user data from migration for testing purpose. Assume the running application url is http://localhost/api
 

@@ -12,8 +12,6 @@ services:
     environment:
       - "DB_PORT=3306"
       - "DB_HOST=database"
-    depends_on: 
-      - database
 
   web:
     # build:
@@ -25,14 +23,11 @@ services:
       - app
     ports:
       - 80:80
-    depends_on: 
-      - database
 
   database:
-    image: mysql:latest
-    command: --default-authentication-plugin=mysql_native_password
-    # volumes:
-    #   - dbdata:/var/lib/mysql
+    image: mysql:5.7
+    volumes:
+      - dbdata:/var/lib/mysql
     environment:
       - "MYSQL_DATABASE=blog"
       - "MYSQL_USER=blog"
@@ -41,5 +36,5 @@ services:
     ports:
       - 33061:3306
 
-# volumes:
-#   dbdata:
+volumes:
+  dbdata:
