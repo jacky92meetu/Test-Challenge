@@ -55,7 +55,7 @@ class Handler extends ExceptionHandler
         }
         if ($exception instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException || $exception instanceof \Illuminate\Database\Eloquent\ModelNotFoundException) {
             return response()->json([
-                'error' => $exception->getMessage()
+                'error' => 'Not Found'
             ], 404);
         }
         if ($exception instanceof \Illuminate\Auth\Access\AuthorizationException) {

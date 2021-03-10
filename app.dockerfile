@@ -10,9 +10,9 @@ RUN php composer-setup.php --install-dir=/usr/local/bin --filename=composer
 RUN rm -rf composer-setup.php
 
 # Build process
-# COPY . .
-# RUN composer install --no-dev
+COPY . .
+RUN composer install --no-dev
 
 COPY supervisord-app.conf /etc/supervisord.conf
 
-ENTRYPOINT ["/usr/bin/supervisord", "-n", "-c", "/etc/supervisord.conf"]
+ENTRYPOINT [ "/var/www/html/docker-entrypoint" ]

@@ -8,24 +8,31 @@ services:
     working_dir: /var/www/html
     volumes:
       - ./:/var/www/html
+      - ./nginx.conf:/etc/nginx/nginx.conf
     environment:
       - "DB_PORT=3306"
       - "DB_HOST=database"
+    depends_on: 
+      - database
 
   web:
-    build:
-      context: ./
-      dockerfile: web.dockerfile
+    # build:
+    #   context: ./
+    #   dockerfile: web.dockerfile
+    image: nginx:alpine
     working_dir: /var/www/html
     volumes_from:
       - app
     ports:
-      - 8080:80
+      - 80:80
+    depends_on: 
+      - database
 
   database:
-    image: mysql:5.7
-    volumes:
-      - dbdata:/var/lib/mysql
+    image: mysql:latest
+    command: --default-authentication-plugin=mysql_native_password
+    # volumes:
+    #   - dbdata:/var/lib/mysql
     environment:
       - "MYSQL_DATABASE=blog"
       - "MYSQL_USER=blog"
@@ -34,5 +41,5 @@ services:
     ports:
       - 33061:3306
 
-volumes:
-  dbdata:
+# volumes:
+#   dbdata:

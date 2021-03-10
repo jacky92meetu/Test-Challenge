@@ -23,8 +23,19 @@ class AuthController extends Controller
             return response(['message' => 'This User does not exist, check your details'], 400);
         }
 
-        $accessToken = auth()->user()->generateToken();
+        if(empty(auth()->user()->api_token)){
+            auth()->user()->generateToken();    
+        }
+
+        $accessToken = auth()->user()->api_token;
 
         return response(['user' => auth()->user(), 'access_token' => $accessToken]);
+    }
+
+    public function reset_token(Request $request)
+    {
+        $accessToken = auth()->user()->generateToken();
+
+        return response(['access_token' => $accessToken]);
     }
 }

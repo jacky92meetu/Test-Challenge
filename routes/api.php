@@ -39,6 +39,8 @@ Route::group(['middleware' => ['json.response']], function () {
             return $request->user();
         });
 
+        Route::post('reset_token', [AuthController::class, 'reset_token']);
+
         Route::apiResource('users', UserController::class);
         Route::apiResource('posts', PostController::class);
     });
